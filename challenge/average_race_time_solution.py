@@ -6,7 +6,7 @@ import datetime
 
 def get_data():
     """Return content from the 10k_racetimes.txt file"""
-    with open('10k_racetimes.txt', 'rt') as file:
+    with open('challenge/10k_racetimes.txt', 'rt') as file:
         content = file.read()
     return content
 
@@ -15,12 +15,12 @@ def get_rhines_times():
     races = get_data()
     rhines_times = []
     def get_time(line):
-        return re.findall(r'\d{2}:\S+', line)[0]
+        return re.findall(r'\d{2}:\S+', line)[0]  # creates a regex to find the time in the format mm:ss:M
 
-    for line in races.splitlines():
-       if 'Jennifer Rhines' in line:
-          rhines_times.append(get_time(line))
-    return rhines_times
+    for line in races.splitlines(): # Split the data into lines and loop through each line
+       if 'Jennifer Rhines' in line: # Check if the line contains Jennifer Rhines' name
+          rhines_times.append(get_time(line)) # If it does, extract the time using the get_time function
+    return rhines_times     # Return the list of times
 
 def get_average():
     """Return Jennifer Rhines' average race time in the format:
@@ -38,3 +38,7 @@ def get_average():
             mins, secs = re.split(r'[:.]', racetime)
             total += datetime.timedelta(minutes=int(mins), seconds=int(secs))
     return f'{total / len(racetimes)}'[2:-5]
+
+#print (get_data().splitlines()[1])   # Print the first line of the data file 
+#print(get_rhines_times())'
+print(get_average()) 
